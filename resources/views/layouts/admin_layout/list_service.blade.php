@@ -82,7 +82,11 @@
                                         @foreach ($services as $data)
                                             <tr>
                                                 <td>{{ $data->id }}</td>
-                                                <td>{{ $data->user->name }}</td>
+                                                <td>
+                                                    @php 
+                                                    $service_name =  $data->user->name??'';
+                                                    @endphp
+                                                    {{ $service_name}}</td>
                                                 <td>{{ $data->address}}</td>
                                                 <td>{{ $data->phone}}</td>
                                                 <td>{{ $data->payment_mode}}</td>
