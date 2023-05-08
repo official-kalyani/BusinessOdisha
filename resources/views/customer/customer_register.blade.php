@@ -65,8 +65,9 @@
         <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 
 
-          <!-- <form style="width: 42rem;" action="{{ route('register') }}" method="POST" enctype="multipart/form-data"> -->
-          <form style="width: 42rem;" action="{{ url('/save-customer') }}" method="POST" enctype="multipart/form-data">
+        
+          <form style="width: 42rem;" action="{{ route('otp.generate') }}" method="POST" enctype="multipart/form-data">
+          <!-- <form style="width: 42rem;" action="{{ url('/save-customer') }}" method="POST" enctype="multipart/form-data"> -->
               @csrf
             <div class="fw-normal mb-3 pb-3 logo-div">
               <i class="fas fa-shopping-bag fa-2x " style="color: #709085;"></i>

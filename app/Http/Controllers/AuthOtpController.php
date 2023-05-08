@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\User;
 use App\Models\VerificationCode;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthOtpController extends Controller
 {
@@ -19,18 +22,71 @@ class AuthOtpController extends Controller
     // Generate OTP
     public function generate(Request $request)
     {
-        # Validate Data
-        $request->validate([
-            'mobile' => 'required|exists:users,mobile'
-        ]);
+        $data = $request->all();
+            //  echo '<pre>';print_r($data);exit;
+             if ($request->isMethod('post')) {
+                $seller = new Customer();
+                    $users = new User();
+                 $data = $request->all();
+                //  echo '<pre>';print_r($data);exit;
+                $userCount=User::where('email',$data['email'])->count();
+                if($userCount>0){
+                    $message="Email Already Exists!";
+                    Session::flash('error_message',$message);
+                    return redirect()->back(); 
+                }
+                else{
+                    
+                    $seller->full_name = $data['full_name'];
+                    $seller->mobile = $data['mobile'];
+                    $seller->email = $data['email'];
+                    $seller->full_address = $data['full_address'];
+                    $seller->dob = $data['dob'];
+                    $seller->state = $data['state'];
+                    $seller->city = $data['city'];
+                    $seller->pincode = $data['pincode'];
+        
+                    $users->mobile = $data['mobile'];
+                    $users->email=$data['email'];
+                    $users->name=$data['full_name'];
+                    $users->password=bcrypt($data['password']);
+                    $users->status=0;
+                    $users->user_type='customer';
+                    
+                    $seller->save();
+                    $users->save();
+        
+                    // Send Confirmation Email
+                    $email = $data['email'];
+                    $messageData = [
+                        'email'=> $data['email'],
+                        'name'=>$data['full_name'],
+                        'code'=>base64_encode($data['email'])
+                    ];
+                    Mail::send('emails.confirmation',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Confirm Your Email Account for Registration');
+                    });
+        
+                    // Redirect Back With Success Message
+        
+                    $message="Please Check Your Email For Confirmation to Activate Your Account!";
+                    Session::put('success_message',$message);
+                     # Validate Data
+                        $request->validate([
+                            'mobile' => 'required|exists:users,mobile'
+                        ]);
 
-        # Generate An OTP
-        $verificationCode = $this->generateOtp($request->mobile);
-
-        $message = "Your OTP To Login is - ".$verificationCode->otp;
-        # Return With OTP 
-
-        return redirect()->route('otp.verification', ['user_id' => $verificationCode->user_id])->with('success',  $message); 
+                        # Generate An OTP
+                        $verificationCode = $this->generateOtp($request->mobile);
+                        
+                        $message = "Your OTP To Login is - ".$verificationCode->otp;
+                        # Return With OTP 
+                        // echo $message;exit;
+                        return redirect()->route('otp.verification', ['user_id' => $verificationCode->user_id])->with('success',  $message); 
+                    
+                }
+            }
+       
     }
 
     public function generateOtp($mobile_no)
@@ -87,9 +143,9 @@ class AuthOtpController extends Controller
             $verificationCode->update([
                 'expire_at' => Carbon::now()
             ]);
-            $userstatus->update([
-                'status' => 1
-            ]);
+            // $userstatus->update([
+            //     'status' => 1
+            // ]);
 
             Auth::login($user);
 

@@ -95,9 +95,12 @@
                                                         <label class="control-label">Select Category</label><br>
                                                         <select class="form-control select2" id="category_id" name="category_id">
                                                         <option >Select category</option>
-                                                                    @foreach($categories as $category)
+                                                        @foreach($categories as $category)
                                                                     <option value="{{ $category->id}}" @if($category->id ==$servicedata->category_id ) selected @endif>{{ $category->name}}</option>
                                                                     @endforeach
+                                                                    <!-- @foreach($categories as $category)
+                                                                    <option value="{{ $category->id}}" @if($category->id ==$servicedata->category_id ) selected @endif>{{ $category->name}}</option>
+                                                                    @endforeach -->
                                                         </select>
                                                     </div>
                                                     
@@ -168,6 +171,35 @@
                                                     <label for="">Q & A</label>
                                                     <div class="container my-3">
                                                         <div id="text-box-container">
+                                                            @php 
+                                                             $qa_arr = explode(',',$servicedata->question);
+                                                             $ans_arr = explode(',',$servicedata->answer);
+                                                             
+                                                            @endphp
+                                                        @foreach ($qa_arr as $index => $qa)
+                                                       
+                                                            <div class="text-box mb-3">
+                                                                <div class="input-group">
+                                                                    <input type="text" name="question[]" class="form-control textbox" value="{{ $qa }}" placeholder="Enter question">
+                                                                    <div class="input-group-append">
+                                                                        <button class="btn btn-outline-secondary add-more-textbox" type="button">Add answer</button>
+                                                                        <button class="btn btn-outline-secondary remove-textbox" type="button"><span><i class="fa fa-minus" style="font-size:13px;color:red"></i></span></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="textarea-container">
+                                                                    <textarea name="answer[]" class="form-control mb-2" placeholder="Enter answer">{{ $ans_arr[$index] }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                            @endforeach
+                                                            
+                                                        </div>
+                                                        <button id="add-more-box" class="btn btn-primary" type="button">Add More Question</button>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-12 col-md-6">
+                                                    <label for="">Q & A</label>
+                                                    <div class="container my-3">
+                                                        <div id="text-box-container">
                                                             <div class="text-box mb-3">
                                                                 <div class="input-group">
                                                                     <input type="text" name="question[]" class="form-control textbox" placeholder="Enter question 1">
@@ -181,7 +213,7 @@
                                                         </div>
                                                         <button id="add-more-box" class="btn btn-primary" type="button">Add More Question</button>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 
                                             </div>
                                                
