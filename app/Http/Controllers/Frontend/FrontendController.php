@@ -7,6 +7,8 @@ use App\Models\Sellerinfo;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class FrontendController extends Controller
 {
@@ -15,6 +17,28 @@ class FrontendController extends Controller
     }
     public function register(){
         return view('layouts.frontend_layout.layouts.frontend_register');
+    }
+    public function seller_email_available_check(Request $request){
+        $email = $request->input('email');
+        $Registered_count = User::where('email',$email)->count();
+        $Seller_count = Sellerinfo::where('email',$email)->count();
+        if ($Registered_count && $Seller_count) {
+            $msg = 'registered';
+        }else{
+            $msg = 'failed';
+        }
+       return response()->json(['registered' => $msg]);
+    }
+    public function seller_phone_available_check(Request $request){
+        $mobile = $request->input('mobile');
+        $Registered_count = User::where('mobile',$mobile)->count();
+        $Seller_count = Sellerinfo::where('phone',$mobile)->count();
+        if ($Registered_count && $Seller_count) {
+            $msg = 'registered';
+        }else{
+            $msg = 'failed';
+        }
+       return response()->json(['registered' => $msg]);
     }
     public function save_frontend_seller(Request $request){
         if ($request->isMethod('post')) {
@@ -32,9 +56,10 @@ class FrontendController extends Controller
 
             $users->email=$data['email'];
             $users->name=$data['seller_name'];
+            $users->user_type='seller';
             $users->password=bcrypt($data['password']);
 //             $user->address="";
-//             $user->status=1;
+            $users->status=0;
             if($request->hasfile('image'))
             {
                 $file = $request->file('image');
@@ -45,7 +70,26 @@ class FrontendController extends Controller
             }
             $seller->save();
             $users->save();
-            event(new Registered($users));
+
+            // Mail send code 09-05-23
+            // Send Confirmation Email
+            $email = $data['email'];
+            $messageData = [
+                'email'=> $data['email'],
+                'name'=>$data['seller_name'],
+                'code'=>base64_encode($data['email'])
+            ];
+            Mail::send('emails.confirmation',$messageData,function($message) use($email){
+            $message->to($email)->subject('Confirm Your Email Account for Registration');
+            });
+
+            // Redirect Back With Success Message
+
+            $message="Please Check Your Email For Confirmation to Activate Your Account!";
+            Session::put('success_message',$message);
+            // Mail send code 09-05-23
+
+            // event(new Registered($users));
             auth()->login($users);
             return redirect('/dashboard');
             // return view('layouts.frontend_layout.layouts.frontend_login')->with('success', 'Data added successfully');

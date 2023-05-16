@@ -210,22 +210,22 @@
                                                             </div>
                                                         </div>
                                                 </div>
+                                                <div class="col-6 col-md-6">
+                                                    <label for="features">Features</label>
+                                                    <input id="features" name="features" type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
                                                 <div class="col-md-6 col-6">
                                                     <label for="price">Price</label>
                                                     <input id="price" name="price" type="text" class="form-control" onkeyup="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')">
                                                    
                                                 </div>
-                                                
-                                            </div>
-                                            <div class="row mt-2">
                                                 <div class="col-md-6 col-6">
                                                     <label for="unit">Unit</label>
                                                     <input id="unit" name="unit" type="text" class="form-control" >
                                                 </div>
-                                                <div class="col-6 col-md-6">
-                                                    <label for="features">Features</label>
-                                                    <input id="features" name="features" type="text" class="form-control">
-                                                </div>
+                                                
                                                 
                                             </div>
                                             <div class="row mt-2">

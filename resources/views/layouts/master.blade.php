@@ -19,7 +19,7 @@
                     <div class="w-100">
                         <div class="d-flex flex-column h-100">
                             <div class="mb-4 mb-md-5 text-center">
-                                <a href="index.php" class="d-block auth-logo">
+                                <a href="{{ url('/') }}" class="d-block auth-logo">
                                 <!-- {{asset('images/front_images/img/loading.gif')}} -->
                                     <img src="{{asset('images/admin_login_images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Multiseller</span>
                                 </a>
@@ -92,10 +92,14 @@
                                         <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
                                     </div>
                                 </form>
-
+                                <div class="mb-3">
+                                        <a href="{{ url('/otp/login') }}" class="btn btn-primary w-100 waves-effect waves-light">Log in with OTP</a>
+                                        <!-- <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log in with otp</button> -->
+                                    </div>
                                 
                             </div>
                             <div class="mt-4 mt-md-5 text-center">
+                                
                                 <!-- <p class="mb-0">© <script>
                                         document.write(new Date().getFullYear())
                                     </script>  <i class="mdi mdi-heart text-danger"></i> </p> -->

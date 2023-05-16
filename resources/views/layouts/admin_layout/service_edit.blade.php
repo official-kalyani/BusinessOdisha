@@ -272,6 +272,46 @@
 <!--tinymce js-->
 <script src="{{ asset('libs/tinymce/tinymce.min.js') }}"></script>
 <script src=" {{ asset('js/pages/task-create.init.js') }}"></script>
+
+<script>
+  $(document).ready(function() {
+    var max_textbox = 5; // maximum number of text boxes
+    var max_textarea = 1; // maximum number of text areas under each text box
+    var question_index = 1; // index for question IDs
+    var answer_index = 1; // index for answer IDs
+
+    // Add text box
+    $('#add-more-box').click(function() {
+      if ($('.text-box').length < max_textbox) {
+        var new_textbox = $('.text-box:last').clone();
+        // Increment the question ID
+        question_index++;
+        new_textbox.find('input:text').attr('id', 'question'+question_index).val('');
+        new_textbox.find('input:text').attr('placeholder', 'Enter Question ' + question_index);     
+        new_textbox.find('.textarea-container').empty();
+        new_textbox.find('.remove-textbox').show(); // show remove button
+        $('#text-box-container').append(new_textbox);
+      }
+    });
+
+    // Add text area
+    $('#text-box-container').on('click', '.add-more-textbox', function() {
+      if ($(this).closest('.text-box').find('textarea').length < max_textarea) {
+        var new_textarea = $('<textarea></textarea>').addClass('form-control mb-2');
+        // Increment the answer ID
+        // answer_index++;
+        new_textarea.attr('id', 'answer'+question_index);
+        new_textarea.attr('name', 'answer[]');
+        new_textarea.attr('placeholder', 'Enter Answer for Question ' + question_index);
+        $(this).closest('.text-box').find('.textarea-container').append(new_textarea);
+      }
+    });
+    // Remove text box
+    $('#text-box-container').on('click', '.remove-textbox', function() {
+      $(this).closest('.text-box').remove();
+    });
+  });
+</script>
 </body>
 
 </html>

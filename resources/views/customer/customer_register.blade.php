@@ -7,8 +7,8 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <!-- <script type="text/javascript" src="https://use.fontawesome.com/b9bdbd120a.js"></script> -->
 
@@ -85,19 +85,21 @@
                       <input type="text" id="full_name" class="form-control" name="full_name"/>
                     </div>
                   </div>
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                        <label class="form-label" for="mobile">Mobile</label>
-                        <input type="tel" id="mobile" class="form-control" name="mobile"/>
+                  <div class="col-md-6 mb-4" >
+                    <div class="form-outline" style="position: relative;">
+                        <label class="form-label" for="mobile" >Mobile</label>
+                        <input type="tel" id="mobile" class="form-control" name="mobile" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && this.value.length < 10" />
+                        <span id="error_mobile" style="position: absolute;top: 39px;left: 225px;"></span>
                     </div>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-md-6 mb-4">
-                    <div class="form-outline">
+                    <div class="form-outline" style="position: relative;">
                         <label class="form-label" for="email">Email</label>
                         <input type="email" id="email" class="form-control" name="email"/>
+                        <span id="error_email" style="position: absolute;top: 39px;left: 225px;"></span>
                     </div>
                   </div>
                   <div class="col-md-6 mb-4">
@@ -155,10 +157,12 @@
                       <input type="password" id="cpassword" class="form-control" name="cpassword"/>
                     </div>
                   </div>
+                  <span class="registrationFormAlert" style="color:red;" id="PasswordnotMatch">
+                  <span class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch">
                 </div>
 
                 <div class="pt-1 mb-4">
-              <button class="btn btn-primary btn-block" type="submit">Submit</button>
+              <button class="btn btn-primary btn-block" type="submit" id="create">Submit</button>
             </div>
           </form>
 
@@ -175,6 +179,83 @@
     </div>
   </div>
 </section>
+<script>
+    function checkPasswordMatch() {
+        var password = $("#password").val();
+        var confirmPassword = $("#cpassword").val();
+        if (password != confirmPassword)
+            $("#PasswordnotMatch").html("Passwords does not match!");
+        else
+            $("#CheckPasswordMatch").html("Passwords match.");
+    }
+    $(document).ready(function() {
+        $("#cpassword").keyup(checkPasswordMatch);
+    });
+    </script>
+<script>
+  $(document).ready(function(){
+    $('#email').blur(function() {
+        var error_email = '';
+        var email = $('#email').val();
+        var _token = $('input[name="_token"]').val();
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
+        if (!filter.test(email)) {
+          $('#error_email').html('<i class="fas fa-times-circle text-danger"></i>');
+          $('#email').addClass('has-error');
+          $('#create').attr('disabled', 'disabled');
+        } else {
+          $.ajax({
+            url: "{{ url('customer_email_available_check') }}",
+            method: "POST",
+            data: { email: email, _token: _token },
+            success: function(result) {
+              if (result.registered == 'failed') {
+                $('#error_email').html('<i class="fas fa-check-circle text-success"></i>');
+                $('#email').removeClass('has-error');
+                $('#create').attr('disabled', false);
+              } else {
+                $('#error_email').html('<i class="fas fa-times-circle text-danger"></i>');
+                $('#email').addClass('has-error');
+                $('#create').attr('disabled', 'disabled');
+              }
+            }
+          });
+        }
+    });
+    $('#mobile').blur(function() {
+      
+        var error_mobile = '';
+        var mobile = $('#mobile').val();
+        var _token = $('input[name="_token"]').val();
+        var filter = /^\d{10}$/;
+
+        // if (!filter.test(mobile)) {
+        //   $('#error_mobile').html('<i class="fas fa-times-circle text-danger"></i>');
+        //   $('#mobile').addClass('has-error');
+        //   $('#create').attr('disabled', 'disabled');
+        // } else {
+          $.ajax({
+            url: "{{ url('customer_phone_available_check') }}",
+            method: "POST",
+            data: { mobile: mobile, _token: _token },
+            success: function(result) {
+              if (result.registered == 'failed') {
+                $('#error_mobile').html('<i class="fas fa-check-circle text-success"></i>');
+                $('#mobile').removeClass('has-error');
+                $('#create').attr('disabled', false);
+              } else {
+                $('#error_mobile').html('<i class="fas fa-times-circle text-danger"></i>');
+                $('#mobile').addClass('has-error');
+                $('#create').attr('disabled', 'disabled');
+              }
+            }
+          });
+        // }
+    });
+  });
+  
+
+</script>
   </body>
 </html>

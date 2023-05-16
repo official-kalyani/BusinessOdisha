@@ -172,7 +172,7 @@ class UserController extends Controller
                 //     Session::put('error_message',$message);
                 //     return redirect()->back();
                 // }
-              
+                
                 return redirect('/dashboard');
             }else{
                 $message="Invalid Email or Password!";
@@ -560,6 +560,7 @@ class UserController extends Controller
                 $servicedata = new Service();
                 $servicedata->type = $data['type'];
                 $servicedata->seller_name = $data['seller_name'];
+                $servicedata->category_id = $data['service-category'];
                 $servicedata->address = $data['address'];
                 $servicedata->phone = $data['phone'];
                 $servicedata->is_whatsapp = $data['is_whatsapp'];
@@ -574,7 +575,8 @@ class UserController extends Controller
                 $servicedata->answer = implode(',',$data['answer']);
                
                 $servicedata->save();
-                return redirect('/add-product-service')->with('success', 'Data added successfully');
+                return redirect('/list-service')->with('success', 'Data added successfully');
+                // return redirect('/add-product-service')->with('success', 'Data added successfully');
               }
         }
     }
@@ -721,6 +723,8 @@ class UserController extends Controller
         $servicedata->from_date=$request->from_date;
         $servicedata->to_date=$request->to_date;
         $servicedata->status=$request->status;
+        $servicedata->question = implode(',',$data['question']);
+        $servicedata->answer = implode(',',$data['answer']);
         // $servicedata->order_quantity=$request->order_quantity;
         
         if($request->hasfile('image'))

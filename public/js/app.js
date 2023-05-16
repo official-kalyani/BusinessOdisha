@@ -299,8 +299,18 @@ File: Main Js File
     }
 
     function updateRadio(radioId) {
-        if (radioId !== null)
+    //     const radioElement = document.getElementById(radioId);
+    // if (radioElement !== null) {
+    //     radioElement.checked = true;
+    // } else {
+    //     console.error('The element with ID ' + radioId + ' does not exist.');
+    // }
+        if (radioId !== null){
             document.getElementById(radioId).checked = true;
+        }else {
+        console.error('The checkbox element does not exist.');
+        }
+            
     }
 
     function layoutSetting() {

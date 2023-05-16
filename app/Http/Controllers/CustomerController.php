@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Session;
 class CustomerController extends Controller
 {
     public function home(){
-        return view('layouts.frontend_layout.layouts.master'); 
+        return view('customer.homepage'); 
+        // return view('layouts.frontend_layout.layouts.master'); 
      }
      public function register(){
          return view('customer.customer_register');
@@ -75,6 +76,27 @@ class CustomerController extends Controller
              
              // return view('layouts.frontend_layout.layouts.frontend_login')->with('success', 'Data added successfully');
          }
+     }
+     public function customer_email_available_check(Request $request){
+        $email = $request->input('email');
+        $Registered_count = User::where('email',$email)->count();
+        $Customer_count = Customer::where('email',$email)->count();
+        if ($Registered_count && $Customer_count) {
+            $msg = 'registered';
+        }else{
+            $msg = 'failed';
+        }
+       return response()->json(['registered' => $msg]);
+     }
+     public function customer_phone_available_check(Request $request){
+        $mobile = $request->input('mobile');
+        $Registered_count = User::where('mobile',$mobile)->count();
+        if ($Registered_count) {
+            $msg = 'registered';
+        }else{
+            $msg = 'failed';
+        }
+       return response()->json(['registered' => $msg]);
      }
     //  public function confirmAccount($email){
     //     // echo 'x';exit;

@@ -18,7 +18,33 @@ class AuthOtpController extends Controller
     {
         return view('auth.otp-login');
     }
+    public function generatebyphone(Request $request)
+    {
+        # Validate Data
+        $request->validate([
+            'mobile' => 'required|exists:users,mobile'
+        ]);
 
+        # Generate An OTP
+        $verificationCode = $this->generateOtp($request->mobile);
+
+        $message = "Your OTP To Login is - ".$verificationCode->otp;
+        # Return With OTP 
+
+        return redirect()->route('otp.verification', ['user_id' => $verificationCode->user_id])->with('success',  $message); 
+    }
+    public function checkMobileRegistered(Request $request){
+        // $data = $request->all();
+        $mobile = $request->input('mobile_number');
+        $Registered_count = User::where('mobile',$mobile)->where('status', 0)->count();
+        if ($Registered_count) {
+            $msg = 'registered';
+        }else{
+            $msg = 'failed';
+        }
+       return response()->json(['registered' => $msg]);
+        // return response()->json(['registered' => $isRegistered]);
+    }
     // Generate OTP
     public function generate(Request $request)
     {
@@ -148,8 +174,12 @@ class AuthOtpController extends Controller
             // ]);
 
             Auth::login($user);
-
-            return redirect('/dashboard');
+            if ($user->user_type === 'customer') {
+                return redirect('/homepage');
+            } else {
+                return redirect('/dashboard');
+            }
+            // return redirect('/dashboard');
             // return redirect('/');
         }
 

@@ -38,6 +38,10 @@ Route::post('/confirm/{code}',[App\Http\Controllers\UserController::class, 'conf
 // For normal otp verification without sending to mobile start
 Route::controller(AuthOtpController::class)->group(function(){
     Route::get('/otp/login', 'login')->name('otp.login');
+    Route::post('/otp/generatebyphone', 'generatebyphone')->name('otp.generatebyphone');
+
+    Route::post('/checkMobileRegistered', 'checkMobileRegistered')->name('otp.checkMobileRegistered');
+    
     Route::post('/otp/generate', 'generate')->name('otp.generate');
     Route::get('/otp/verification/{user_id}', 'verification')->name('otp.verification');
     Route::post('/otp/login', 'loginWithOtp')->name('otp.getlogin');
@@ -70,6 +74,7 @@ Route::group(['middleware'=>['auth']],function(){
 
     Route::get('/impersonate/user/{email}',[App\Http\Controllers\ImpersonateController::class, 'impersonate']);
     Route::post('/email_available_check',[App\Http\Controllers\UserController::class,'email_available_check']); 
+    
     // seller code end
 
     // Master Category code start
@@ -126,14 +131,21 @@ Route::delete('/service-delete/{id}', [App\Http\Controllers\UserController::clas
 });
 Route::get('/impersonate/destroy',[App\Http\Controllers\ImpersonateController::class, 'destroy']);
 
-// Frontend section
+// Frontend section for seller
 Route::get('/fontend-home',[App\Http\Controllers\Frontend\FrontendController::class,'home']);
-Route::get('/frontend-register',[App\Http\Controllers\Frontend\FrontendController::class,'register']);
+Route::get('/seller-register',[App\Http\Controllers\Frontend\FrontendController::class,'register']);
+// Route::get('/frontend-register',[App\Http\Controllers\Frontend\FrontendController::class,'register']);
 Route::post('/save-frontend-seller',[App\Http\Controllers\Frontend\FrontendController::class,'save_frontend_seller']);
+Route::post('/seller_email_available_check',[App\Http\Controllers\Frontend\FrontendController::class,'seller_email_available_check']); 
+Route::post('/seller_phone_available_check',[App\Http\Controllers\Frontend\FrontendController::class,'seller_phone_available_check']); 
 //end Frontend section
 
 // Frontend customer section
-Route::get('/fontend-home',[App\Http\Controllers\CustomerController::class,'home']);
+Route::get('/homepage',[App\Http\Controllers\CustomerController::class,'home']);
+// Route::get('/fontend-home',[App\Http\Controllers\CustomerController::class,'home']);
 Route::get('/customer-register',[App\Http\Controllers\CustomerController::class,'register']);
 Route::post('/save-customer',[App\Http\Controllers\CustomerController::class,'save_customer']);
+Route::post('/customer_email_available_check',[App\Http\Controllers\CustomerController::class,'customer_email_available_check']); 
+
+Route::post('/customer_phone_available_check',[App\Http\Controllers\CustomerController::class,'customer_phone_available_check']); 
 //end Frontend customer section
