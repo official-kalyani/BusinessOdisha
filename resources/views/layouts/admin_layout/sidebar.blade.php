@@ -39,6 +39,7 @@
                 <ul class="sub-menu" aria-expanded="false">
                 
                     <li><a href="{{ url('/list-category') }}" data-key="t-product-detail"> Add Category</a></li>
+                    <li><a href="{{ url('/list-city') }}" data-key="t-product-detail"> Add City</a></li>
                     @canany('Role access')
                     <li><a href="{{ route('roles.index') }}" data-key="t-product-detail"> Manage Role</a></li>
                     @endcanany

@@ -81,7 +81,7 @@
                                         <label for="mobile" class="col-md-6 col-form-label">{{ __('Mobile No') }}</label>
 
                                         <!-- <div class="col-md-6"> -->
-                                            <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile" autofocus placeholder="Enter Your Registered Mobile Number">
+                                            <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile" autofocus placeholder="Enter  Registered Mobile Number" onkeypress="return event.charCode >= 48 && event.charCode <= 57 && this.value.length < 10">
 
                                             @error('mobile')
                                             <span class="invalid-feedback" role="alert">

@@ -80,6 +80,12 @@ Route::group(['middleware'=>['auth']],function(){
     // Master Category code start
     Route::get('/add-category',[App\Http\Controllers\UserController::class,'add_category']);
     Route::get('/list-category',[App\Http\Controllers\UserController::class,'list_category']);   
+    Route::get('/list-city',[App\Http\Controllers\UserController::class,'list_city']);   
+    Route::post('/save-city',[App\Http\Controllers\UserController::class,'save_city']);
+    Route::get('city/edit/{id}', [App\Http\Controllers\UserController::class, 'editCity'])->name('editCity');
+    Route::put('/update-city/{id}',[App\Http\Controllers\UserController::class, 'update_city']);
+    Route::post('/city_available_check',[App\Http\Controllers\UserController::class,'city_available_check']);
+    Route::delete('/city-delete/{id}',[App\Http\Controllers\UserController::class, 'delete_city']);
     Route::get('/filtercategory',[App\Http\Controllers\UserController::class,'filtercategory']);   
    
     Route::delete('/category-delete/{id}',[App\Http\Controllers\UserController::class, 'delete_category']);

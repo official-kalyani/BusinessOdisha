@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -12,7 +13,9 @@ use Illuminate\Support\Facades\Session;
 class CustomerController extends Controller
 {
     public function home(){
-        return view('customer.homepage'); 
+        $services = Category::where('type', '=', 'service')->get();
+        $products = Category::where('type', '=', 'product')->get();
+        return view('customer.homepage',compact('services','products')); 
         // return view('layouts.frontend_layout.layouts.master'); 
      }
      public function register(){

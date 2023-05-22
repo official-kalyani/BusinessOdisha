@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
     <!-- jQuery library -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
     <!-- Popper JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
@@ -36,9 +36,22 @@
                 <!-- <li><a href="#">People Search</a></li> -->
                 <li><a href="#">Advertise with us</a></li>
                 <li><a href="#">Free Listing</a></li>
-                <!-- <li><span class="dot"></span></li> -->
+                @if(Auth::check())
+                <li>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{Auth::user()->name}} 
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <a class="dropdown-item" href="{{url('/logout')}}"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
+                    
+                  </div>
+                </div>
+                
+                </li>
+              @else
                 <li><a href="#">Login / SIgnup</a></li>
-                <!-- <li><a href="#">FR</a></li> -->
+              @endif
             </ul>
         </div>
 

@@ -78,7 +78,13 @@
                                             <tr>
                                                 
                                                 <td>{{ $data->id}}</td>
-                                                <td><img src="{{ asset('uploads/userdata/'.$data->image) }}" width="70px" height="70px" alt="Image"></td>
+                                                <td>
+                                                @if($data->image) 
+                                                    <img src="{{ asset('uploads/userdata/'.$data->image) }}" width="70px" height="70px" alt="Image">
+                                                    @else
+                                                    <img src="{{ asset('uploads/userdata/No_Logo_Available.png') }}" width="70px" height="70px" alt="Image">
+                                                    @endif
+                                                    </td>
                                                 <td>{{ $data->seller_name}}</td>
                                                
                                                 <td>{{ $data->phone}}</td>

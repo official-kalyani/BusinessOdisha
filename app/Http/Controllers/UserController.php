@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\AppointmentMaster;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Consultation;
 use App\Models\DoctorInformation;
 use App\Models\User;
@@ -161,6 +162,7 @@ class UserController extends Controller
             Session::forget('error_message');
             Session::forget('success_message');
             $data = $request->all();
+            $user = User::where('email',$data['email'])->first();
             if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                 $request->session()->put('loginId', $data['email']);
                 // Session::flash('error_message','Invalid Email or Password!');
@@ -173,7 +175,11 @@ class UserController extends Controller
                 //     return redirect()->back();
                 // }
                 
-                return redirect('/dashboard');
+                if ($user->user_type === 'customer') {
+                    return redirect('/homepage');
+                } else {
+                    return redirect('/dashboard');
+                }
             }else{
                 $message="Invalid Email or Password!";
                 Session::flash('error_message',$message);
@@ -388,6 +394,79 @@ class UserController extends Controller
         // $specialitydata = Category::paginate(5);       
         $count = Category::count();
         return view('layouts.admin_layout.category_list',compact('categories','count'));
+    }
+    public function list_city(){
+        $cities = City::orderby('id', 'desc')->paginate(5);
+        $count = City::count();
+        return view('layouts.admin_layout.list_city',compact('cities','count'));
+    }
+    public function save_city(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            $citydata = new City();
+            $citydata->state = 'Odisha';
+            $citydata->city = $data['city'];
+            if($request->hasfile('image'))
+            {
+                    $file = $request->file('image');
+                    $extention = $file->getClientOriginalExtension();
+                    $filename = time().'.'.$extention;
+                    $file->move('uploads/city/', $filename);
+                    $citydata->image = $filename;
+            }
+            $citydata->save();
+          
+            
+            
+            return redirect('/list-city')->with('success', 'Data added successfully');
+        }
+    }
+    public function editCity($id){
+        $city = City::findOrFail($id);
+       
+        return view('layouts.admin_layout.edit-city',compact('city'));
+    }
+    public function update_city($id,Request $request){
+        $city = City::findOrFail($id);
+       
+            $data = $request->all();
+            $city->city = $data['city'];
+           
+            if($request->hasfile('image'))
+            {
+                    $file = $request->file('image');
+                    $extention = $file->getClientOriginalExtension();
+                    $filename = time().'.'.$extention;
+                    $file->move('uploads/city/', $filename);
+                    $city->image = $filename;
+            }
+            
+            $city->save();
+            
+            return redirect('/list-city')->with('success', 'Updated successfully.');
+    }
+    public function city_available_check(Request $request){
+        if($request->get('city'))
+        {
+            $city = $request->get('city');
+            $data = DB::table("cities")
+            ->where('city', $city)
+            ->count();
+            if($data > 0)
+            {
+            echo 'not_unique';
+            }
+            else
+            {
+            echo 'unique';
+            }
+        }
+    }
+    public function delete_city($id){
+        $statedata = City::find($id);
+       
+         $statedata->delete();
+         return redirect('/list-city')->with('status', 'Data deleted successfully');
     }
     public function filtercategory(Request $request)
     {
