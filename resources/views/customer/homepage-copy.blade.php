@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
     <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -24,46 +24,54 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     
 
-    <link rel="stylesheet" href="{{ asset('css/style_3_1.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style_3.css') }}">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-yellow">
+<header class="main_header">
     <div class="container">
-    <a class="navbar-brand" href="#"><img src=""{{ asset('customer-images/Logo_white.png') }}"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-              <a class="nav-link" href="#">Advertise with us </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#"> Free Listing </a>
-            </li>
-            @if($customerName)
-            <li class="nav-item active">
-              {{ $customerName }} 
-                <i class="fa fa-user" aria-hidden="true"></i>
-                <!-- <a  href="{{url('/logout')}}" class="nav-link"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a> -->
-              </li>
-            <li class="nav-item active">
-              <a  href="{{url('/logout')}}" class="nav-link"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
-            </li>
-            @else
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Login / Signup </a>
-              </li>
-              
-              @endif
+        <div class="header_flex">
+        <div class="left_side site_logo"><a href="#"><img src="{{ asset('customer-images/Logo_white.png') }}"></a></div>
+        <div class="right_side">
+            <ul class="header_link">
+                <!-- <li><a href="#">People Search</a></li> -->
+                <li><a href="#">Advertise with us</a></li>
+                <li><a href="#">Free Listing</a></li>
+               
+                @if($customerName)
+                <li>
+                {{ $customerName }} <i class="fa fa-user" aria-hidden="true"></i>
+               
+                <!-- <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ $customerName }} 
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <a class="dropdown-item" href="{{url('/logout')}}"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
+                    
+                  </div>
+                </div> -->
                 
+                </li>
+                <li> <a  href="{{url('/logout')}}"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a></li>
+              @else
+                <li><a href="#">Login / Signup</a></li>
+              @endif
             </ul>
         </div>
 
-      
+        <!-- mobile header sidebar -->
+        <div class="right_side_mobile">
+          <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Advertise with us</a>
+            <a href="#">Free Listing</a>
+            <a href="#">Login / SIgnup</a>
+          </div>
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
         </div>
-   
-    </nav>
+        </div>
+    </div>
+</header>
 <div class="cover_image_section">
     <div class="container">
         <div class="header_container">
@@ -73,11 +81,11 @@
                     <span class="authFirstname">Your own web directory.</span>
                 </div>   
             </div>
-            <div class="form_div row">
-                <div class="catogory_search col">
-                    <input type="text" class="form-control" placeholder="What?(e.g. Plumber)">
+            <div class="form_div">
+                <div class="catogory_search">
+                    <input type="text" class="form-control form-control" placeholder="What?(e.g. Plumber)">
                 </div>
-                <div class="location_search col">
+                <div class="location_search">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Something clever..">
                         <div class="input-group-append">
@@ -104,8 +112,8 @@
 <div class="service_category_section bg_white">
     <div class="container-fluid">
         <div class="our_cat_section_heading">
-            <div class="center_title">
-              <h2 class="heading_styling">Service <span class="highlight_title">Cat</span>egory</h2>
+            <div class="left_side">
+              <h2 class="heading_styling">Service <span class="title_left">Cat</span>egory</h2>
               <p>Click and find the services near you.</p>
             </div>
             <!-- <div class="right_side">
@@ -116,7 +124,7 @@
     <div class="container-fluid">
         <div class="our_cat_section_section">
           @foreach($services as $service)
-            <a href="{{url('/servicecategory/'.$service->id)}}" class="our_cat_section_box">
+            <a href="#" class="our_cat_section_box">
               <div class="our_cat_section_link">
                 <h5>{{ $service->name }}</h5>
                 <h6>09 Ads</h6>
@@ -139,8 +147,8 @@
 <div class="product_category_section bg_grey">
     <div class="container-fluid">
         <div class="our_cat_section_heading">
-            <div class="center_title">
-              <h2 class="heading_styling">Product <span class="highlight_title">Cat</span>egory</h2>
+            <div class="left_side">
+              <h2 class="heading_styling">Product <span class="title_left">Cat</span>egory</h2>
               <p>We are the bridge that connects buyers and sellers in one place.</p>
             </div>
             <!-- <div class="right_side">
@@ -175,8 +183,8 @@
     <div class="product_category_section">
         <div class="container-fluid">
             <div class="our_cat_section_heading">
-                <div class="center_title">
-                  <h2 class="heading_styling">Trending <span class="highlight_title">Ser</span>vices</h2>
+                <div class="left_side">
+                  <h2 class="heading_styling">Trending <span class="title_left">Ser</span>vices</h2>
                   <p>Find services at your fingertips.</p>
                 </div>
                 <!-- <div class="right_side">
@@ -185,14 +193,11 @@
             </div>
         </div>
     </div>
-      <div class="container-fluid row mx-auto">
-        <div class="category_detail_section col">
-            <div class="left_side col">
-                <div class="row">
-                    <div class="col category_banner_section">
+    <div class="category_detail_section container-fluid">
+      <div class="left_side">
         <div class="category_banner">
           <div class="banner_content">
-                            <h2>Electronics & Electrical Goods & Supplies</h2>
+            <h3>Electronics & Electrical Goods & Supplies</h3>
             <ul>
               <li><a href="#">Voltage & Power Stabilizers</a></li>
               <li><a href="#">GPS and Navigation Devices</a></li>
@@ -202,13 +207,10 @@
             <a href="#" class="view_all_cat_btn">View All</a>
           </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -217,12 +219,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -231,10 +230,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -243,13 +241,10 @@
               </div>
               </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -258,12 +253,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -272,10 +264,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -285,16 +276,11 @@
               </div>
           </div>
       </div>
-                </div>
-            </div>
-        </div>
-        <div class="category_detail_section col">
-            <div class="left_side col">
-                <div class="row">
-                    <div class="col category_banner_section">
+
+      <div class="left_side">
         <div class="category_banner">
           <div class="banner_content">
-                            <h2>Electronics & Electrical Goods & Supplies</h2>
+            <h3>Electronics & Electrical Goods & Supplies</h3>
             <ul>
               <li><a href="#">Voltage & Power Stabilizers</a></li>
               <li><a href="#">GPS and Navigation Devices</a></li>
@@ -304,13 +290,10 @@
             <a href="#" class="view_all_cat_btn">View All</a>
           </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -319,12 +302,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -333,10 +313,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -345,13 +324,10 @@
               </div>
               </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -360,12 +336,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -374,10 +347,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -387,14 +359,12 @@
               </div>
           </div>
       </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <!-- mobile Start -->
     <div class="container-fluid">
-        <div class="mobile_product_service_box row">
-            <div class="mobile_product_service_box_column col">
+      <div class="mobile_product_service_box">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -404,7 +374,7 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-            <div class="mobile_product_service_box_column col">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -414,7 +384,7 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-            <div class="mobile_product_service_box_column col">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -424,7 +394,7 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-            <div class="mobile_product_service_box_column col">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -434,17 +404,7 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-            <div class="mobile_product_service_box_column col">
-          <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
-          </div>
-          <div class="mobile_product_service_category">
-            <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-            <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-            <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
-          </div>
-        </div>
-            <div class="mobile_product_service_box_column col">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -454,48 +414,135 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
+        <div class="mobile_product_service_box_column">
+          <div class="mobile_product_service_box_image">
+            <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
+          </div>
+          <div class="mobile_product_service_category">
+            <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
+            <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
+            <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+          </div>
         </div>
-        <!-- <div class="mobile_product_service_box row">
-            <div class="mobile_product_service_box_column col">
-              <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
+      </div>
+      <!-- <div class="service_or_product_cat_mobile">
+      <div class="category_heading">
+      <div class="left_side">
+          <h2>Electronics & Electrical Goods & Supplies</h2>
+      </div>
+      <div class="right_side">
+          <button class="button_view_all">View All</button>
+      </div>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
             </div>
-              <div class="mobile_product_service_category">
-                <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-                <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-                <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
             </div>
           </div>
-            <div class="mobile_product_service_box_column col">
-              <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
         </div>
-              <div class="mobile_product_service_category">
-                <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-                <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-                <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
             </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
             </div>
-            <div class="mobile_product_service_box_column col">
-              <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
           </div>
-              <div class="mobile_product_service_category">
-                <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-                <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-                <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
         </div> 
       </div>
     </div> -->
     </div>
     <!-- mobile end -->
   </div>
-    <div class="Trending_services bg_grey">
+  <div class="Trending_products bg_grey">
     <div class="product_category_section">
         <div class="container-fluid">
             <div class="our_cat_section_heading">
-                  <div class="center_title">
-                    <h2 class="heading_styling">Trending <span class="highlight_title">Pro</span>ducts</h2>
+                <div class="left_side">
+                  <h2 class="heading_styling">Trending <span class="title_left">Pro</span>ducts</h2>
                   <p>Business marketplace for you.</p>
                 </div>
                 <!-- <div class="right_side">
@@ -504,14 +551,11 @@
             </div>
         </div>
     </div>
-      <div class="container-fluid row mx-auto">
-        <div class="category_detail_section col">
-            <div class="left_side col">
-                <div class="row">
-                    <div class="col category_banner_section">
+    <div class="category_detail_section container-fluid">
+      <div class="left_side">
         <div class="category_banner">
           <div class="banner_content">
-                            <h2>Electronics & Electrical Goods & Supplies</h2>
+            <h3>Electronics & Electrical Goods & Supplies</h3>
             <ul>
               <li><a href="#">Voltage & Power Stabilizers</a></li>
               <li><a href="#">GPS and Navigation Devices</a></li>
@@ -521,13 +565,10 @@
             <a href="#" class="view_all_cat_btn">View All</a>
           </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg')}}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -536,12 +577,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -550,10 +588,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -562,13 +599,10 @@
               </div>
               </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -577,12 +611,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -591,10 +622,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -604,16 +634,11 @@
               </div>
           </div>
       </div>
-                </div>
-            </div>
-        </div>
-        <div class="category_detail_section col">
-            <div class="left_side col">
-                <div class="row">
-                    <div class="col category_banner_section">
+
+      <div class="left_side">
         <div class="category_banner">
           <div class="banner_content">
-                            <h2>Electronics & Electrical Goods & Supplies</h2>
+            <h3>Electronics & Electrical Goods & Supplies</h3>
             <ul>
               <li><a href="#">Voltage & Power Stabilizers</a></li>
               <li><a href="#">GPS and Navigation Devices</a></li>
@@ -623,13 +648,10 @@
             <a href="#" class="view_all_cat_btn">View All</a>
           </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -638,12 +660,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -652,10 +671,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -664,13 +682,10 @@
               </div>
               </div>
         </div>
-                    </div>
-                    <div class="col px-0">
         <div class="sub_category_columns">
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Office Automation Products</a></h2>
+          <div class="sub_category_set">
+          <div class="product_thumbnail"><img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}"></div>
+          <div class="product_meta"><h3><a href="#">Office Automation Products</a></h3>
             <ul>
               <li><a href="#">Multifunction Printer</a></li>
               <li><a href="#">Xerox Machines</a></li>
@@ -679,12 +694,9 @@
           </div>
           </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
-                                <div class="product_meta col-7">
-                                    <h2>
-                                        <a href="#">Control & Automation</a>
-                                    </h2>
+          <div class="sub_category_set">
+            <div class="product_thumbnail"><img src="{{ asset('customer-images/lighting-controllers1-125x125.jpg') }}"></div>
+            <div class="product_meta"><h3><a href="#">Control & Automation</a></h3>
               <ul>
                 <li><a href="#">VFD</a></li>
                 <li><a href="#">PLC</a></li>
@@ -693,10 +705,9 @@
             </div>
             </div>
 
-                            <div class="sub_category_set row">
-                                <div class="product_thumbnail col-5"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}">
-                                </div>
-                                <div class="product_meta col-7"><h2><a href="#">Commercial Lights</a></h2>
+            <div class="sub_category_set">
+              <div class="product_thumbnail"><img src="{{ asset('customer-images/street-light-125x125.jpg') }}"></div>
+              <div class="product_meta"><h3><a href="#">Commercial Lights</a></h3>
                 <ul>
                   <li><a href="#">Flood Lights</a></li>
                   <li><a href="#">Street Lights</a></li>
@@ -706,14 +717,12 @@
               </div>
           </div>
       </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <!-- mobile Start -->
     <div class="container-fluid">
-        <div class="mobile_product_service_box row">
-            <div class="mobile_product_service_box_column col">
+      <div class="mobile_product_service_box">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -723,17 +732,7 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-            <div class="mobile_product_service_box_column col">
-          <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
-          </div>
-          <div class="mobile_product_service_category">
-            <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-            <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-            <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
-          </div>
-        </div>
-            <div class="mobile_product_service_box_column col">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -743,17 +742,7 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-            <div class="mobile_product_service_box_column col">
-          <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
-          </div>
-          <div class="mobile_product_service_category">
-            <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-            <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-            <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
-          </div>
-        </div>
-            <div class="mobile_product_service_box_column col">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -763,7 +752,7 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-            <div class="mobile_product_service_box_column col">
+        <div class="mobile_product_service_box_column">
           <div class="mobile_product_service_box_image">
             <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
@@ -773,52 +762,146 @@
             <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
           </div>
         </div>
-        </div>
-        <!-- <div class="mobile_product_service_box row">
-            <div class="mobile_product_service_box_column col">
-              <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
-            </div>
-              <div class="mobile_product_service_category">
-                <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-                <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-                <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
-            </div>
+        <div class="mobile_product_service_box_column">
+          <div class="mobile_product_service_box_image">
+            <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
           </div>
-            <div class="mobile_product_service_box_column col">
-              <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
+          <div class="mobile_product_service_category">
+            <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
+            <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
+            <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+          </div>
         </div>
-              <div class="mobile_product_service_category">
-                <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-                <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-                <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+        <div class="mobile_product_service_box_column">
+          <div class="mobile_product_service_box_image">
+            <img src="{{ asset('customer-images/photocopier-machine-125x125.jpg') }}">
+          </div>
+          <div class="mobile_product_service_category">
+            <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
+            <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
+            <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="service_or_product_cat_mobile">
+      <div class="category_heading">
+      <div class="left_side">
+          <h2>Electronics & Electrical Goods & Supplies</h2>
+      </div>
+      <div class="right_side">
+          <button class="button_view_all">View All</button>
+      </div>
+      </div>
+      
+      <div class="accordion">
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
             </div>
             <div class="right_side">
             <a href="#" class="mobile_category_item">Multifunction Printer</a>
             <a href="#" class="mobile_category_item">Xerox Machines</a>
             <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
             </div>
-            <div class="mobile_product_service_box_column col">
-              <div class="mobile_product_service_box_image">
-                <img src="images/photocopier-machine-125x125.jpg">
           </div>
-              <div class="mobile_product_service_category">
-                <a href="#" class="mobile_product_service_category_items">Multifunction Printer</a>
-                <a href="#" class="mobile_product_service_category_items">Xerox Machines</a>
-                <a href="#" class="mobile_product_service_category_items">Fingerprint Scanners</a>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title">Office Automation Products</span>
+            <span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <div class="left_side">
+              <a href="#" class="mobile_category_image"><img src="images/photocopier-machine-125x125.jpg"></a>
+            </div>
+            <div class="right_side">
+            <a href="#" class="mobile_category_item">Multifunction Printer</a>
+            <a href="#" class="mobile_category_item">Xerox Machines</a>
+            <a href="#" class="mobile_category_item">Fingerprint Scanners</a>
+            </div>
+          </div>
         </div> 
       </div>
     </div> -->
     </div>
     <!-- mobile end -->
   </div>
+
   <div class="search_by_cities bg_white">
-      <div class="product_category_section">
+    <div class="search_by_cities_section">
         <div class="container-fluid">
             <div class="our_cat_section_heading">
-                <div class="center_title">
-                  <h2 class="heading_styling">Search <span class="highlight_title">by</span>Cities</h2>
+                <div class="left_side">
+                  <h2 class="heading_styling">Search <span class="title_left">by</span>Cities</h2>
                   <p>Search and explore any city. One-stop solution.</p>
                 </div>
                 <!-- <div class="right_side">
@@ -827,17 +910,55 @@
             </div>
         </div>
     </div>
-  
-    
     <div class="container-fluid search_by_cities_flex">
-      @foreach($cities as $city)
       <div class="search_by_cities_section_area">
         <a href="#" class="search_by_cities_box">
-          <img src="{{ asset('uploads/city/'.$city->image) }}" class="city_image">
-          <div class="city_name">{{ $city->city}}</div>
+          <img src="{{ asset('customer-images/city/bhubneswar.webp') }}" class="city_image">
+          <div class="city_name">Bhubaneswar</div>
         </a>
       </div>
-      @endforeach
+      <div class="search_by_cities_section_area">
+        <a href="#" class="search_by_cities_box">
+          <img src="{{ asset('customer-images/city/puri.webp') }}" class="city_image">
+          <div class="city_name">Puri</div>
+        </a>
+      </div>
+      <div class="search_by_cities_section_area">
+        <a href="#" class="search_by_cities_box">
+          <img src="{{ asset('customer-images/city/cuttack.webp') }}" class="city_image">
+          <div class="city_name">Cuttack</div>
+        </a>
+      </div>
+      <div class="search_by_cities_section_area">
+        <a href="#" class="search_by_cities_box">
+          <img src="{{ asset('customer-images/city/angul.webp') }}" class="city_image">
+          <div class="city_name">Angul</div>
+        </a>
+      </div>
+      <div class="search_by_cities_section_area">
+        <a href="#" class="search_by_cities_box">
+          <img src="{{ asset('customer-images/city/berhampur.webp') }}" class="city_image">
+          <div class="city_name">Berhampur</div>
+        </a>
+      </div>
+      <div class="search_by_cities_section_area">
+        <a href="#" class="search_by_cities_box">
+          <img src="{{ asset('customer-images/city/rourkela.webp') }}" class="city_image">
+          <div class="city_name">Rourkela</div>
+        </a>
+      </div>
+      <div class="search_by_cities_section_area">
+        <a href="#" class="search_by_cities_box">
+          <img src="{{ asset('customer-images/city/jajpur.webp') }}" class="city_image">
+          <div class="city_name">Jajpur</div>
+        </a>
+      </div>
+      <div class="search_by_cities_section_area">
+        <a href="#" class="search_by_cities_box">
+          <img src="{{ asset('customer-images/city/keonjhar.webp') }}" class="city_image">
+          <div class="city_name">Keonjhar</div>
+        </a>
+      </div>
     </div>
   </div>
   <footer>
@@ -1101,5 +1222,35 @@
         </div>
     </div>
   </footer>
+  
+<!-- <script>
+  const items = document.querySelectorAll('.accordion button');
+
+function toggleAccordion() {
+  const itemToggle = this.getAttribute('aria-expanded');
+
+  for (i = 0; i < items.length; i++) {
+    items[i].setAttribute('aria-expanded', 'false');
+  }
+
+  if (itemToggle == 'false') {
+    this.setAttribute('aria-expanded', 'true');
+  }
+}
+
+items.forEach((item) => item.addEventListener('click', toggleAccordion));
+
+</script> -->
+
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+  </script>
+
 </body>
 </html>

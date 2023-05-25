@@ -154,4 +154,5 @@ Route::post('/save-customer',[App\Http\Controllers\CustomerController::class,'sa
 Route::post('/customer_email_available_check',[App\Http\Controllers\CustomerController::class,'customer_email_available_check']); 
 
 Route::post('/customer_phone_available_check',[App\Http\Controllers\CustomerController::class,'customer_phone_available_check']); 
+Route::get('/servicecategory/{id}',[App\Http\Controllers\CustomerController::class,'servicecategory']);
 //end Frontend customer section

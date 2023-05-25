@@ -163,28 +163,43 @@ class UserController extends Controller
             Session::forget('success_message');
             $data = $request->all();
             $user = User::where('email',$data['email'])->first();
-            if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                $request->session()->put('loginId', $data['email']);
-                // Session::flash('error_message','Invalid Email or Password!');
-                // //Check Email is Activator or Not
-                // $userStatus = User::where('email',$data['email'])->first();
-                // if($userStatus->status==0){
-                //     Auth::logout();
-                //     $message = "Your Account is Not Activated Yet! Please Confirm Your Email to Activate!";
-                //     Session::put('error_message',$message);
-                //     return redirect()->back();
-                // }
-                
-                if ($user->user_type === 'customer') {
-                    return redirect('/homepage');
-                } else {
-                    return redirect('/dashboard');
-                }
-            }else{
-                $message="Invalid Email or Password!";
-                Session::flash('error_message',$message);
-                return redirect()->back();
+            // login code start
+            $credentials = $request->only('email', 'password');
+            if (Auth::guard('web')->attempt($credentials)) {
+                // User login successful
+                return redirect('/dashboard');
             }
+            if (Auth::guard('customer')->attempt($credentials)) {
+                // Admin login successful
+                return redirect('/homepage');
+            }
+            // login code end
+            // Login failed
+            return back()->withErrors(['message' => 'Invalid credentials']);
+            // old code start
+            // if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+            //     $request->session()->put('loginId', $data['email']);
+            //     Session::flash('error_message','Invalid Email or Password!');
+            //     //Check Email is Activator or Not
+            //     $userStatus = User::where('email',$data['email'])->first();
+            //     if($userStatus->status==0){
+            //         Auth::logout();
+            //         $message = "Your Account is Not Activated Yet! Please Confirm Your Email to Activate!";
+            //         Session::put('error_message',$message);
+            //         return redirect()->back();
+            //     }
+                
+            //     if ($user->user_type === 'customer') {
+            //         return redirect('/homepage');
+            //     } else {
+            //         return redirect('/dashboard');
+            //     }
+            // }else{
+            //     $message="Invalid Email or Password!";
+            //     Session::flash('error_message',$message);
+            //     return redirect()->back();
+            // }
+            // old code end
         }
     }
 
@@ -340,7 +355,10 @@ class UserController extends Controller
         $clinicdata->gst_no=$request->gst_no;
         $clinicdata->closing_time=$request->closing_time;
         $clinicdata->pan_no=$request->pan_no;
-        $clinicdata->business_hr= implode(',',$request->business_hr) ;
+        if ($clinicdata->business_hr) {
+            $clinicdata->business_hr= implode(',',$request->business_hr) ;
+        }
+        
         if($request->hasfile('image'))
         {
             $destination ="uploads/userdata/".$clinicdata->image;
@@ -389,7 +407,7 @@ class UserController extends Controller
     
     
     public function list_category(){
-        $categories = Category::where('parent_id', null)->orderby('id', 'desc')->paginate(5);
+        $categories = Category::where('parent_id', null)->orderby('created_at', 'desc')->paginate(5);
     
         // $specialitydata = Category::paginate(5);       
         $count = Category::count();
@@ -478,16 +496,16 @@ class UserController extends Controller
     }
     public function delete_category($id){
         $category = Category::findOrFail($id);
-    if(count($category->subcategory))
-    {
-        $subcategories = $category->subcategory;
-        foreach($subcategories as $cat)
+        if(count($category->subcategory))
         {
-            $cat = Category::findOrFail($cat->id);
-            $cat->parent_id = null;
-            $cat->save();
+            $subcategories = $category->subcategory;
+            foreach($subcategories as $cat)
+            {
+                $cat = Category::findOrFail($cat->id);
+                $cat->parent_id = null;
+                $cat->save();
+            }
         }
-    }
     $category->delete();
         // $statedata = Category::find($id);
        

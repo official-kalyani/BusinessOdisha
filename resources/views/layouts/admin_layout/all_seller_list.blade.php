@@ -85,10 +85,29 @@
                                                     <img src="{{ asset('uploads/userdata/No_Logo_Available.png') }}" width="70px" height="70px" alt="Image">
                                                     @endif
                                                     </td>
-                                                <td>{{ $data->seller_name}}</td>
+                                                <td>
+                                                    @if($data->seller_name)
+                                                    {{ $data->seller_name}}
+                                                    @else
+                                                    {{ $data->company_name}}
+                                                    @endif
+                                                </td>
                                                
-                                                <td>{{ $data->phone}}</td>
-                                                <td>{{ $data->email}}</td>
+                                                <td>
+                                                    @if($data->phone)
+                                                    {{ $data->phone}}
+                                                    @else
+                                                   XXXXXXXXXX 
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($data->email)
+                                                    {{ $data->email}}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                
+                                                </td>
                                                 
                                                 <td>
                                                     <div class="d-flex gap-3">

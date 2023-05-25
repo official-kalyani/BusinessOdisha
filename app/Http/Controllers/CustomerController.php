@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Customer;
+use App\Models\Sellerinfo;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
     public function home(){
-        $services = Category::where('type', '=', 'service')->get();
+        if (Auth::guard('customer')->check()) {
+            $customerName = Auth::guard('customer')->user()->full_name;
+        } else {
+            // Customer is not logged in
+            $customerName = null;
+        }
+        $services = Category::where('type', '=', 'service')->where('parent_id', null)->get();
         $products = Category::where('type', '=', 'product')->get();
-        return view('customer.homepage',compact('services','products')); 
+        $cities = City::get();
+        return view('customer.homepage',compact('services','products','customerName','cities')); 
         // return view('layouts.frontend_layout.layouts.master'); 
      }
      public function register(){
@@ -134,4 +144,12 @@ class CustomerController extends Controller
     //     }
 
     // }
+    public function servicecategory($id){
+        $parent_category = Category::where('id', $id)->first();
+        $category = Category::where('parent_id', $id)->first();
+       if ($category) {
+          $seller_infos = Sellerinfo::where('category_id',$category->id)->paginate(6);
+       }
+        return view('customer.servicecategory',compact('category','seller_infos','parent_category'));
+    }
 }

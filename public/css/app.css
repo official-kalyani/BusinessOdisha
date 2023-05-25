@@ -570,6 +570,7 @@ border-right: 2px solid #007850; }
 body[data-sidebar-size="sm"] {
   min-height: 1000px;
   overflow: hidden;
+  overflow-y: scroll;
  }
   body[data-sidebar-size="sm"] .main-content {
     margin-left: 70px; }

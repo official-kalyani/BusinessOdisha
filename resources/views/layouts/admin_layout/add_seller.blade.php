@@ -249,47 +249,55 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                        <div class="col-md-6 mb-4">
+                                                    <div class="col-md-6 mb-4">
                                                         <div class="form-outline">
-                                                            <label for="password">Business Hour</label><br/>
+                                                            <label for="password">Business Hour</label><br />
                                                             <label class="form-check-label" for="monday">
                                                                 Monday
                                                             </label>
-                                                                <input type="checkbox" name="business_hr[]" id="business_hr1" value="monday">
+                                                            <input type="checkbox" name="business_hr[]"
+                                                                id="business_hr1" value="monday">
                                                             <label class="form-check-label" for="tuesday">
                                                                 Tuesday
                                                             </label>
-                                                                <input type="checkbox" name="business_hr[]" id="business_hr2" value="tuesday">
+                                                            <input type="checkbox" name="business_hr[]"
+                                                                id="business_hr2" value="tuesday">
                                                             <label class="form-check-label" for="wednesday">
                                                                 Wednesday
                                                             </label>
-                                                                <input type="checkbox" name="business_hr[]" id="business_hr3" value="wednesday">
+                                                            <input type="checkbox" name="business_hr[]"
+                                                                id="business_hr3" value="wednesday">
                                                             <label class="form-check-label" for="formCheck1">
                                                                 Thursday
                                                             </label>
-                                                                <input type="checkbox" name="business_hr[]" id="business_hr4" value="thursday">
+                                                            <input type="checkbox" name="business_hr[]"
+                                                                id="business_hr4" value="thursday">
                                                             <label class="form-check-label" for="formCheck1">
                                                                 Friday
                                                             </label>
-                                                                <input type="checkbox" name="business_hr[]" id="business_hr5" value="friday">
+                                                            <input type="checkbox" name="business_hr[]"
+                                                                id="business_hr5" value="friday">
                                                             <label class="form-check-label" for="formCheck1">
                                                                 Saturday
                                                             </label>
-                                                            <input type="checkbox" name="business_hr[]" id="business_hr6" value="saturday">
+                                                            <input type="checkbox" name="business_hr[]"
+                                                                id="business_hr6" value="saturday">
                                                             <label class="form-check-label" for="formCheck1">
                                                                 Sunday
                                                             </label>
-                                                                <input type="checkbox" name="business_hr[]" id="business_hr7" value="sunday">
+                                                            <input type="checkbox" name="business_hr[]"
+                                                                id="business_hr7" value="sunday">
                                                         </div>
-                                                        
+
                                                     </div>
-                                                     <div class="col-md-6 mb-4">
+                                                    <div class="col-md-6 mb-4">
                                                         <div class="form-outline">
                                                             <label for="image">Upload logo</label>
-                                                            <input id="image" name="image" type="file" class="form-control">
+                                                            <input id="image" name="image" type="file"
+                                                                class="form-control">
                                                         </div>
-                                                        
-                                                        
+
+
                                                     </div>
                                                 </div>
                                                 <div class="button-container">

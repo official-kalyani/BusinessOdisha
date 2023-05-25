@@ -4,7 +4,7 @@
     <tr>
         <td>{{$_SESSION['i']}}</td>
         <td>{{$dash}}{{$subcategory->name}}</td>
-        <!-- <td>{{$subcategory->slug}}</td> -->
+        <td>{{$subcategory->type}}</td>
         <td>{{$subcategory->parent->name}}</td>
         <td>
             <div class="d-flex gap-3">
