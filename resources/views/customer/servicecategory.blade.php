@@ -31,12 +31,43 @@
 
     <link rel="stylesheet" href="{{ asset('css/service_category_style.css') }}">
     <style>
-    /* .fixed-width-title{
-        display: inline-block;
-        width: 500px; 
-        overflow: hidden;
-        white-space: nowrap;
-      } */
+    .right_side_box {
+    background-color: #f5f5f5;
+    padding: 10px;
+}
+
+.advance_deal {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.related_search {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.related_search li {
+    margin-top: 5px;
+}
+
+.related_search a {
+    color: #777777;
+    text-decoration: none;
+}
+
+.related_search li:not(:first-child) a {
+    padding-left: 10px;
+}
+.first-child-highlight a {
+    font-weight: bold;
+}
+
+.first-child-highlight a::before {
+    content: '\25B6'; /* Unicode arrow symbol */
+    position: absolute;
+    right: 179px;
+}
     </style>
 </head>
 
@@ -276,7 +307,7 @@
                     {!! $seller_infos->render() !!}
                 </div>
                 <div class="right_side_box_section">
-                    <div class="right_side_box mt-3">
+                    <!-- <div class="right_side_box mt-3">
                         <p class="advance_deal font_14">Get the List of Top</p>
                         <p class="advance_deal font_18 color_0076d7">Banquet Halls</p>
                         <p class="advance_deal font_12">We'll send you contact details in seconds for free</p>
@@ -296,17 +327,15 @@
                             </div>
                             <button type="submit" class="btn btn-primary width_100_bold">Get Best Deal</button>
                         </form>
-                    </div>
+                    </div> -->
+                    
                     <div class="right_side_box mt-3">
-                        <p class="advance_deal font_bold font_15">Most searched localities in Bhubaneshwar</p>
+                        <p class="advance_deal font_bold font_15">Category</p>
                         <ul class="related_search">
-                            <li class="mt-1"><a href="#" class="color777">Banquet Halls in Bhubaneshwar</a></li>
-                            <li class="mt-1"><a href="#" class="color777">Banquet Halls in Bhubaneshwar</a></li>
-                            <li class="mt-1"><a href="#" class="color777">Banquet Halls in Bhubaneshwar</a></li>
-                            <li class="mt-1"><a href="#" class="color777">Banquet Halls in Bhubaneshwar</a></li>
-                            <li class="mt-1"><a href="#" class="color777">Banquet Halls in Bhubaneshwar</a></li>
-                            <li class="mt-1"><a href="#" class="color777">Banquet Halls in Bhubaneshwar</a></li>
-                            <li class="mt-1"><a href="#" class="color777">Banquet Halls in Bhubaneshwar</a></li>
+                            <li class="mt-1 first-child-highlight"><a href="#" class="color777 ">{{$parent_category->name}}</a></li>
+                            @foreach($subcategories as $sub_cat_name)
+                            <li class="mt-1"><a href="#" class="color777">{{ $sub_cat_name->name }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

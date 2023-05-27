@@ -36,13 +36,19 @@ class AuthOtpController extends Controller
     public function checkMobileRegistered(Request $request){
         // $data = $request->all();
         $mobile = $request->input('mobile_number');
-        $Registered_count = User::where('mobile',$mobile)->where('status', 0)->count();
-        if ($Registered_count) {
+        // $user_type = $request->input('user_type');
+        $Registered_count = User::where('mobile',$mobile)->first();
+        // $Registered_count = User::where('mobile',$mobile)->where('status', 0)->where('user_type',$user_type)->count();
+        // $user_type = User::where('mobile',$mobile)->where('status', 0)->first();
+        $user_type = '';
+        if ($Registered_count->status == 0 || $Registered_count->status == 1) {
             $msg = 'registered';
+            $user_type = $Registered_count->user_type;
+            
         }else{
             $msg = 'failed';
         }
-       return response()->json(['registered' => $msg]);
+       return response()->json(['registered' => $msg,'user_type'=>$user_type]);
         // return response()->json(['registered' => $isRegistered]);
     }
     // Generate OTP
@@ -105,7 +111,11 @@ class AuthOtpController extends Controller
                         # Generate An OTP
                         $verificationCode = $this->generateOtp($request->mobile);
                         
-                        $message = "Your OTP To Login is - ".$verificationCode->otp;
+                       // code for sending otp start
+                                $msg = "The Secret OTP for login to your Businessodisha Account is $verificationCode->otp. Valid only for 3 mins.Do not share this OTP with anyone. GRAPHEMETECH SERVICES";
+                                VerificationCode::sendSms($request->mobile,$msg);
+                        // code for sending otp end
+
                         # Return With OTP 
                         // echo $message;exit;
                         return redirect()->route('otp.verification', ['user_id' => $verificationCode->user_id])->with('success',  $message); 

@@ -52,6 +52,7 @@ class CustomerController extends Controller
                 $seller->dob = $data['dob'];
                 $seller->state = $data['state'];
                 $seller->city = $data['city'];
+                $seller->password=bcrypt($data['password']);
                 $seller->pincode = $data['pincode'];
     
                 $users->mobile = $data['mobile'];
@@ -82,8 +83,8 @@ class CustomerController extends Controller
                 // return redirect()->back();
                 // event(new Registered($users));
                 auth()->login($users);
-                return redirect('/otp/login');
-                // return redirect('/dashboard');
+                // return redirect('/otp/login');
+                return redirect('/dashboard');
                 
             }
              
@@ -147,9 +148,10 @@ class CustomerController extends Controller
     public function servicecategory($id){
         $parent_category = Category::where('id', $id)->first();
         $category = Category::where('parent_id', $id)->first();
+        $subcategories = Category::where('parent_id',$id)->get();
        if ($category) {
           $seller_infos = Sellerinfo::where('category_id',$category->id)->paginate(6);
        }
-        return view('customer.servicecategory',compact('category','seller_infos','parent_category'));
+        return view('customer.servicecategory',compact('category','seller_infos','parent_category','subcategories'));
     }
 }
