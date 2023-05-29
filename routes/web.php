@@ -146,7 +146,10 @@ Route::post('/seller_email_available_check',[App\Http\Controllers\Frontend\Front
 Route::post('/seller_phone_available_check',[App\Http\Controllers\Frontend\FrontendController::class,'seller_phone_available_check']); 
 //end Frontend section
 
+
+
 // Frontend customer section
+
 Route::get('/homepage',[App\Http\Controllers\CustomerController::class,'home']);
 // Route::get('/fontend-home',[App\Http\Controllers\CustomerController::class,'home']);
 Route::get('/customer-register',[App\Http\Controllers\CustomerController::class,'register']);

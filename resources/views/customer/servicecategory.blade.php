@@ -72,35 +72,7 @@
 </head>
 
 <body>
-    <header class="main_header">
-        <div class="container">
-            <div class="header_flex">
-                <div class="left_side site_logo"><a href="#"><img
-                            src="{{ asset('customer-images/Logo_white.png') }}"></a></div>
-                <div class="right_side">
-                    <ul class="header_link">
-                        <!-- <li><a href="#">People Search</a></li> -->
-                        <li><a href="#">Advertise with us</a></li>
-                        <li><a href="#">Free Listing</a></li>
-                        <!-- <li><span class="dot"></span></li> -->
-                        <li><a href="#">Login / SIgnup</a></li>
-                        <!-- <li><a href="#">FR</a></li> -->
-                    </ul>
-                </div>
-
-                <!-- mobile header sidebar -->
-                <div class="right_side_mobile">
-                    <div id="mySidenav" class="sidenav">
-                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                        <a href="#">Advertise with us</a>
-                        <a href="#">Free Listing</a>
-                        <a href="#">Login / SIgnup</a>
-                    </div>
-                    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
-                </div>
-            </div>
-        </div>
-    </header>
+@include('customer.customer_navbar')
 
     <div class="ads_space">
         <img width="auto" height="113"
@@ -277,8 +249,9 @@
                                     <!-- <div class="category_button_part">AC Banquet hall</div> -->
                                 </div>
                                 <div class="result_box_comment_section">
-                                    <div class="review_icon"><img
-                                            src="{{ asset('customer-images/reviewcomment_icon.svg') }}"></div>
+                                    <div class="review_icon">
+                                        <img
+                                        src="{{ asset('customer-images/reviewcomment_icon.svg') }}"></div>
                                     <div class="comment_text"><q>We have booked the Mandap (both floors) for thread
                                             ceremony. Excellent experience. Two no AC guest rooms are also spacious.
                                             Ample of car parking available. AC was comfort...</q></div>
